@@ -12,7 +12,7 @@ for file in os.listdir('.'):
 shuffle(files)
 
 def listAdded(name):
-    sql = "SELECT COUNT(*) as count from wants_list where name = '" + name + "'"
+    sql = "SELECT COUNT(*) as count from wants_list where name = '" + pg.escape_string(name) + "'"
     res = con.query(sql)
     for dic in res.dictresult():
         num = dic['count']
@@ -22,11 +22,11 @@ def addList(lines):
     name = lines[0].strip()
 
     # Add this list
-    sql = "INSERT INTO wants_list (name,score) VALUES ('" + name + "',0.0)"
+    sql = "INSERT INTO wants_list (name,score) VALUES ('" + pg.escape_string(name) + "',0.0)"
     con.query(sql)
 
     #Get th list id
-    sql = "SELECT id from wants_list WHERE name = '" + name + "'"
+    sql = "SELECT id from wants_list WHERE name = '" + pg.escape_string(name) + "'"
     res = con.query(sql)
     idv = res.dictresult()[0]['id']
 
@@ -45,16 +45,15 @@ def addList(lines):
             print line
             sys.exit(1)
 
-        sql = "INSERT INTO wants_want (artist,title,format,genre,label,mainid,cdexists,score,doneebay,donegemm,donepops) VALUES ('" + artist.replace("'","\\\'") + "','" + title.replace("'","\'") + "','" + format + "','" + genre + "','',-1,false,0.0,false,false,false)"
+        sql = "INSERT INTO wants_want (artist,title,format,genre,label,mainid,cdexists,score,doneebay,donegemm,donepops) VALUES ('" + pg.escape_string(artist) + "','" + pg.escape_string(title) + "','" + pg.escape_string(format) + "','" + pg.escape_string(genre) + "','',-1,false,0.0,false,false,false)"
         print sql
         res = con.query(sql)
 
-        sql = "SELECT id from wants_want where artist = '" + artist + "' AND title = '" + title + "' AND format = '" + format + "' AND genre = '" + genre + "'"
+        sql = "SELECT id from wants_want where artist = '" + pg.escape_string(artist) + "' AND title = '" + pg.escape_string(title) + "' AND format = '" + pg.escape_string(format) + "' AND genre = '" + pg.escape_string(genre) + "'"
         res = con.query(sql)
         idw = res.dictresult()[0]['id']
 
         sql = "INSERT INTO wants_list_want (list_id,want_id) VALUES (" + `idv` + "," + `idw` + ")"
-        print sql
         res = con.query(sql)
 
 if len(sys.argv) == 2:
