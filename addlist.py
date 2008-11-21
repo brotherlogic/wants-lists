@@ -22,7 +22,7 @@ def addList(lines):
     name = lines[0].strip()
 
     # Add this list
-    sql = "INSERT INTO wants_list (name,score) VALUES ('" + pg.escape_string(name) + "',0.0)"
+    sql = "INSERT INTO wants_list (name,score) VALUES ('" + pg.escape_string(name) + "',-1.0)"
     con.query(sql)
 
     #Get th list id
@@ -45,7 +45,7 @@ def addList(lines):
             print line
             sys.exit(1)
 
-        sql = "INSERT INTO wants_want (artist,title,format,genre,label,mainid,cdexists,score,doneebay,donegemm,donepops) VALUES ('" + pg.escape_string(artist) + "','" + pg.escape_string(title) + "','" + pg.escape_string(format) + "','" + pg.escape_string(genre) + "','',-1,false,0.0,false,false,false)"
+        sql = "INSERT INTO wants_want (artist,title,format,genre,label,mainid,cdexists,score,doneebay,donegemm,donepops) VALUES ('" + pg.escape_string(artist) + "','" + pg.escape_string(title) + "','" + pg.escape_string(format) + "','" + pg.escape_string(genre) + "','',-1,false,-1.0,false,false,false)"
         print sql
         res = con.query(sql)
 
