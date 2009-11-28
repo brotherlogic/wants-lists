@@ -11,12 +11,12 @@ def scorelist(listname):
         if len(elems) == 3:
             (artist,title,id) = elems
             
-            cursor.execute("select simon_rank from score_table where record_id = " + id)
+            cursor.execute("select simon_rank,baseformat from score_table,records,formats where record_id = " + id + " AND record_id = recordnumber AND format = formatnumber")
             row = cursor.fetchone()
             if row != None:
                 score = float(row[0])
                 if score == 0:
-                    unranked.append(id)
+                    unranked.append((id,row[1]))
 
     return unranked
 
@@ -28,5 +28,5 @@ else:
     for file in os.listdir('.'):
         if file.endswith(".list"):
             unranked.extend(scorelist(file))
-    for id in unranked:
-        print id
+    for pair in unranked:
+        print pair[0],pair[1]

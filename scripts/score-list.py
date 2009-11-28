@@ -17,7 +17,7 @@ def scorelist(listname):
                 score = float(row[0])
                 scores.append(score)
 
-    print listname,sum(scores)/len(scores)
+    print sum(scores)/len(scores),listname
 
 if len(sys.argv) > 1:
     scorelist(sys.argv[1])
