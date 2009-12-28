@@ -13,7 +13,7 @@ def scorelist(listname):
             
             cursor.execute("select simon_rank from score_table where record_id = " + id)
             row = cursor.fetchone()
-            if row != None:
+            if row != None and row[0] != None:
                 score = float(row[0])
                 scores.append(score)
 
