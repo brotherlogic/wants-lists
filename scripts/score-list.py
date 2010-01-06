@@ -18,7 +18,7 @@ def scorelist(listname):
 
     scores.sort()
     if len(scores) > 0:
-        print sum(scores)/len(scores),scores[len(scores)/2],listname
+        print sum(scores)/len(scores),listname
     else:
         print 0.0,listname
 
