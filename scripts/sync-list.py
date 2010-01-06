@@ -1,10 +1,7 @@
 import pgdb,sys,os
 
-#Get the connection details
-(username,pwd) = open('details.txt','r').readlines()[0].split(" ")
-
 #Connect to the database
-db = pgdb.connect(dsn='192.168.1.103:music',user=username,password=pwd)
+db = pgdb.connect(dsn='192.168.1.100:music',user='music')
 cursor = db.cursor()
 
 def sync(filename):
