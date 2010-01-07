@@ -12,15 +12,19 @@ def sync(filename):
         if len(elems) == 2:
             (artist,title) = elems
 
-        cursor.execute("select recordnumber from records where author = '" + pgdb.escape_string(artist) + "' AND title = '" + pgdb.escape_string(title) + "'")
+        cursor.execute("select records.recordnumber,author,title from records,track,groops,lineupset,lineup where records.recordnumber = track.recordnumber and track.trackrefnumber = lineupset.tracknumber and lineupset.lineupnumber = lineup.lineupnumber AND lineup.groopnumber = groops.groopnumber and records.title = '" + pgdb.escape_string(title) + "' AND groops.show_name = '" + pgdb.escape_string(artist) + "'")
+        #cursor.execute("select recordnumber from records where author = '" + pgdb.escape_string(artist) + "' AND title = '" + pgdb.escape_string(title) + "'")
         row = cursor.fetchone()
         seen = False
+        done = []
         while row != None:
             if not seen:
-                print artist,title
-                seen = True
-
-            print "\t",row[0]
+                if (artist,title) not in done:
+                    print artist,title,"(" + filename + ")"
+                    seen = True
+            if row[0] not in done:
+                print "\t",row[0]
+                done.append(row[0])
             row = cursor.fetchone()
 
 if len(sys.argv) > 1:
