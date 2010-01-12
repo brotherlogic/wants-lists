@@ -1,6 +1,6 @@
 import time,pgdb
 
-POUNDS_PER_WEEK = 10
+POUNDS_PER_WEEK = 15
 
 day_of_year = time.localtime()[7]
 budget = (10*52/365.0)*day_of_year
