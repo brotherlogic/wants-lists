@@ -14,7 +14,8 @@ def scorelist(listname,show):
             row = cursor.fetchone()
             if row != None and row[0] != None:
                 score = float(row[2])
-                print row[0] + " - " + row[1] + " [" + `score` + "]"
+                if show:
+                    print row[0] + " - " + row[1] + " [" + `score` + "]"
                 scores.append(score)
 
     scores.sort()
