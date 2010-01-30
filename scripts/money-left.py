@@ -1,9 +1,9 @@
 import time,pgdb
 
-POUNDS_PER_WEEK = 15
+POUNDS_PER_WEEK = 20
 
 day_of_year = time.localtime()[7]
-budget = (10*52/365.0)*day_of_year
+budget = (POUNDS_PER_WEEK*52/365.0)*day_of_year
 
 db = pgdb.connect(dsn='192.168.1.100:music',user='music')
 cursor = db.cursor()
