@@ -30,3 +30,6 @@ else:
     for file in os.listdir('.'):
         if file.endswith(".list"):
             scorelist(file,False)
+    for file in os.listdir('comps'):
+        if file.endswith(".list"):
+            scorelist("comps/" + file,False)
