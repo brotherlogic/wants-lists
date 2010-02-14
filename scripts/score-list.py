@@ -5,7 +5,9 @@ cursor = db.cursor()
 
 def scorelist(listname,show):
     scores = []
-    for line in open(listname,'r').readlines():
+    read = False
+    for line in open(listname,'r').readlines()[1:]:
+        read = True
         elems = line.strip().split("~")
         if len(elems) == 3:
             (artist,title,id) = elems
@@ -21,7 +23,7 @@ def scorelist(listname,show):
     scores.sort()
     if len(scores) > 0:
         print sum(scores)/len(scores),listname
-    else:
+    elif read:
         print 0.0,listname
 
 if len(sys.argv) > 1:
@@ -30,3 +32,6 @@ else:
     for file in os.listdir('.'):
         if file.endswith(".list"):
             scorelist(file,False)
+    for file in os.listdir('comps'):
+        if file.endswith(".list"):
+            scorelist("comps/" + file,False)
