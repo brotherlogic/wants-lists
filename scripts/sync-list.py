@@ -13,7 +13,7 @@ def sync(filename):
             (artist,title) = elems
 
         if artist != 'Various':
-            cursor.execute("select records.recordnumber,author,title from records,track,groops,lineupset,lineup where records.recordnumber = track.recordnumber and track.trackrefnumber = lineupset.tracknumber and lineupset.lineupnumber = lineup.lineupnumber AND lineup.groopnumber = groops.groopnumber and records.title = '" + pgdb.escape_string(title) + "' AND groops.show_name = '" + pgdb.escape_string(artist) + "'")
+            cursor.execute("select records.recordnumber,author,title from records,track,groops,lineupset,lineup where records.recordnumber = track.recordnumber and track.trackrefnumber = lineupset.tracknumber and lineupset.lineupnumber = lineup.lineupnumber AND lineup.groopnumber = groops.groopnumber and lower(records.title) = '" + pgdb.escape_string(title.lower()) + "' AND lower(groops.show_name) = '" + pgdb.escape_string(artist.lower()) + "'")
         else:
             cursor.execute("select recordnumber from records where author = '" + pgdb.escape_string(artist) + "' AND title = '" + pgdb.escape_string(title) + "'")
         row = cursor.fetchone()
