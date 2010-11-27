@@ -1,7 +1,26 @@
-import pgdb,sys,os
+import sys,os
+from uk.co.brotherlogic.mdb.record import Record
+from uk.co.brotherlogic.mdb.record import GetRecords
+from uk.co.brotherlogic.mdb import User
+from uk.co.brotherlogic.mdb import Connect
 
-db = pgdb.connect(dsn='192.168.1.100:music',user='music')
-cursor = db.cursor()
+#Add all the jars to the class path
+sys.path.append('./postgresql-8.3-603.jdbc4.jar')
+sys.path.append('./mdbcore-0.6-SNAPSHOT.jar')
+
+# Set for COnnection
+#for i in range(1,len(sys.argv),2):
+#    record_id = int(sys.argv[i])
+#    score = int(sys.argv[i+1])#
+
+    # Retrieve the record
+#    rec = GetRecords.create().getRecord(record_id);
+#    user = User.getUser("Simon")
+#    print "Scoring " + rec.getAuthor() + " - " + rec.getTitle() + ": " + `score`
+#    rec.addScore(user,score)
+    
+    # Commit the trans
+#    Connect.getConnection().commitTrans()
 
 def scorelist(listname,show):
     scores = []
@@ -11,14 +30,12 @@ def scorelist(listname,show):
         elems = line.strip().split("~")
         if len(elems) == 3:
             (artist,title,id) = elems
-            
-            cursor.execute("select author,title,simon_score from score_table,records where record_id = recordnumber AND record_id = " + id)
-            row = cursor.fetchone()
-            if row != None and row[0] != None:
-                score = float(row[2])
-                if show:
-                    print row[0] + " - " + row[1] + " [" + `score` + "]"
-                scores.append(score)
+            rec = GetRecords.create().getRecord(int(id))
+
+            score = rec.getScore(User.getUser("Simon"))
+            if show:
+                print rec.getAuthor() + " - " + rec.getTitle() + " [" + `score` + "]"
+            scores.append(score)
 
     scores.sort()
     if len(scores) > 0:
@@ -32,6 +49,3 @@ else:
     for file in os.listdir('.'):
         if file.endswith(".list"):
             scorelist(file,False)
-    for file in os.listdir('comps'):
-        if file.endswith(".list"):
-            scorelist("comps/" + file,False)

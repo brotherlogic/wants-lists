@@ -1,0 +1,1 @@
+jython -Dpython.path=/Users/simon/.m2/repository/postgresql/postgresql/8.3-603.jdbc4/postgresql-8.3-603.jdbc4.jar:/Users/simon/.m2/repository/uk/co/brotherlogic/mdb/mdbcore/0.5.22/mdbcore-0.5.22.jar scripts/score-list.py $1
